@@ -1,6 +1,7 @@
-from tkinter import Button,Label,messagebox,Tk
+from tkinter import Button,Label,messagebox
 import random
 import settings
+import sys
 
 class Cell:
     
@@ -15,6 +16,7 @@ class Cell:
         self.cell_btn_object=None
         self.x=x
         self.y=y
+        
         #Add cells to the list
         Cell.allCells.append(self)
         
@@ -61,6 +63,14 @@ class Cell:
                     cell_ob.show_cell()
             self.show_cell()
         
+        #Game WOn    
+        if Cell.cell_count==settings.MINES_COUNT:
+            messagebox.showinfo("Congratulations..","You have won the game!!")
+        
+        #Cancel Left/Right click events on opened cells
+        self.cell_btn_object.unbind('<Button-1>')
+        self.cell_btn_object.unbind('<Button-3>')
+        
         
     def right_click_actions(self,event):
         if not self.is_mine_candidate:
@@ -76,9 +86,10 @@ class Cell:
     #Logic when user clicked on mine   
     def show_mine(self):
         self.cell_btn_object.configure(bg="red") 
-        top = Tk()  
-        top.geometry("100x100")  
-        messagebox.showerror("GAME OVER","You clicked on a mine") 
+     
+        #self.root.geometry("100x100")  
+        messagebox.showerror("GAME OVER!!!","You clicked on a mine") 
+        sys.exit()
         
     
     #Logic when user clicked on cell
@@ -94,6 +105,9 @@ class Cell:
                 Cell.cell_count_label_object.configure(
                     text=f"Cells Left:{Cell.cell_count}"
                 )
+                
+            #If cell was a mine candidate, color back to default
+            self.cell_btn_object.configure(bg="gainsboro")
             
         self.is_open=True
         
@@ -141,7 +155,7 @@ class Cell:
         for mine_cell in  mine_cells:
             mine_cell.is_mine=True
             
-        print(mine_cells)
+        #print(mine_cells)
         
      
     def __repr__(self):

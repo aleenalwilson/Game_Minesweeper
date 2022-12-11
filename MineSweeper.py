@@ -52,6 +52,19 @@ center_frame=Frame(
 
 center_frame.place(x=utility.width_percent(25),y=utility.height_percent(25))
 
+#Game Title
+title=Label(
+    top_frame,
+    bg="black",
+    fg="white",
+    text="Minesweeper Game",
+    font=('',40)
+)
+
+
+title.place(x=utility.width_percent(25),y=0)
+
+
 
 '''#Create Button
 btn=Button(
